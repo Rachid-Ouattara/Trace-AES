@@ -27,4 +27,18 @@ class AlerteController extends AbstractActionController
         $id = (int) $this->params()->fromRoute('id', 0);
         return new ViewModel(['alerte' => $this->table->find($id)]);
     }
+
+    public function traiterAction()
+    {
+        $id = (int) $this->params()->fromRoute('id', 0);
+
+        if (! $this->getRequest()->isPost()) {
+            return $this->redirect()->toRoute('trace-aes', ['controller' => 'alerte', 'action' => 'view', 'id' => $id]);
+        }
+
+        $statut = $this->params()->fromPost('statut');
+        $this->table->marquerTraitee($id, $statut);
+
+        return $this->redirect()->toRoute('trace-aes', ['controller' => 'alerte', 'action' => 'view', 'id' => $id]);
+    }
 }

@@ -7,5 +7,20 @@
     <dt>Seuil</dt><dd><?= $this->escapeHtml($alerte['seuil']) ?></dd>
     <dt>Statut</dt><dd><?= $this->escapeHtml($alerte['statut']) ?></dd>
     <dt>Date de détection</dt><dd><?= $this->escapeHtml($alerte['date_detection']) ?></dd>
+    <?php if ($alerte['date_traitement']): ?>
+    <dt>Date de traitement</dt><dd><?= $this->escapeHtml($alerte['date_traitement']) ?></dd>
+    <?php endif; ?>
 </dl>
+
+<?php if ($alerte['statut'] === 'nouvelle'): ?>
+<form method="post" action="/trace-aes/alerte/traiter/<?= $this->escapeHtmlAttr($alerte['id']) ?>" style="display:inline">
+    <input type="hidden" name="statut" value="traitee">
+    <button type="submit">Marquer traitée</button>
+</form>
+<form method="post" action="/trace-aes/alerte/traiter/<?= $this->escapeHtmlAttr($alerte['id']) ?>" style="display:inline">
+    <input type="hidden" name="statut" value="fausse_alerte">
+    <button type="submit">Marquer fausse alerte</button>
+</form>
+<?php endif; ?>
+
 <p><a href="/trace-aes/alerte">&larr; Retour à la liste</a></p>

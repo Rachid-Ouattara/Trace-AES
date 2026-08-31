@@ -3,6 +3,12 @@
 use Zend\Mvc\Application;
 use Zend\Stdlib\ArrayUtils;
 
+// Zend Framework 3 predates PHP 8's typed-signature checks; running it under
+// PHP 8 emits E_DEPRECATED on nearly every request. Left displayed, that
+// output is sent before the framework's own headers (redirects, cookies),
+// which then silently fail because headers were already sent.
+error_reporting(E_ALL & ~E_DEPRECATED & ~E_USER_DEPRECATED);
+
 /**
  * This makes our life easier when dealing with paths. Everything is relative
  * to the application root now.

@@ -32,4 +32,20 @@ class AlerteTable
         }
         return $row;
     }
+
+    public function marquerTraitee($id, $statut, $agentTraitementId = null)
+    {
+        if (! in_array($statut, ['traitee', 'fausse_alerte'], true)) {
+            throw new RuntimeException(sprintf('Statut de traitement invalide : %s', $statut));
+        }
+
+        $this->tableGateway->update(
+            [
+                'statut' => $statut,
+                'agent_traitement_id' => $agentTraitementId,
+                'date_traitement' => date('Y-m-d H:i:s'),
+            ],
+            ['id' => (int) $id]
+        );
+    }
 }
