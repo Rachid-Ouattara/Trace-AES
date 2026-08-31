@@ -1,0 +1,8 @@
+<h1>Citerne <?= $this->escapeHtml($citerne['immatriculation']) ?></h1>
+<dl>
+    <dt>ID</dt><dd><?= $this->escapeHtml($citerne['id']) ?></dd>
+    <dt>Immatriculation</dt><dd><?= $this->escapeHtml($citerne['immatriculation']) ?></dd>
+    <dt>Capacité (L)</dt><dd><?= $this->escapeHtml($citerne['capacite_litres']) ?></dd>
+    <dt>Société de transport</dt><dd><?= $this->escapeHtml($citerne['societe_transport_id']) ?></dd>
+</dl>
+<p><a href="/trace-aes/citerne">&larr; Retour à la liste</a></p>

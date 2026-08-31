@@ -1,0 +1,10 @@
+<h1>Trajet #<?= $this->escapeHtml($trajet['id']) ?></h1>
+<dl>
+    <dt>Chargement</dt><dd><?= $this->escapeHtml($trajet['chargement_id']) ?></dd>
+    <dt>Chauffeur</dt><dd><?= $this->escapeHtml($trajet['chauffeur_agent_id']) ?></dd>
+    <dt>Tolérance corridor (m)</dt><dd><?= $this->escapeHtml($trajet['corridor_tolerance_metres']) ?></dd>
+    <dt>Départ prévu</dt><dd><?= $this->escapeHtml($trajet['heure_depart_prevue']) ?></dd>
+    <dt>Arrivée prévue</dt><dd><?= $this->escapeHtml($trajet['heure_arrivee_prevue']) ?></dd>
+    <dt>Statut</dt><dd><?= $this->escapeHtml($trajet['statut']) ?></dd>
+</dl>
+<p><a href="/trace-aes/trajet">&larr; Retour à la liste</a></p>

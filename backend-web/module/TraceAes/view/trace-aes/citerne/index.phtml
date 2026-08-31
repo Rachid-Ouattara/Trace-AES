@@ -1,0 +1,15 @@
+<h1>Citernes</h1>
+<table class="table">
+    <thead>
+        <tr><th>ID</th><th>Immatriculation</th><th>Capacité (L)</th></tr>
+    </thead>
+    <tbody>
+    <?php foreach ($citernes as $citerne): ?>
+        <tr>
+            <td><?= $this->escapeHtml($citerne['id']) ?></td>
+            <td><a href="/trace-aes/citerne/view/<?= $this->escapeHtmlAttr($citerne['id']) ?>"><?= $this->escapeHtml($citerne['immatriculation']) ?></a></td>
+            <td><?= $this->escapeHtml($citerne['capacite_litres']) ?></td>
+        </tr>
+    <?php endforeach; ?>
+    </tbody>
+</table>

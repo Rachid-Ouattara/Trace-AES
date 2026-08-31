@@ -1,0 +1,10 @@
+<h1>Chargement #<?= $this->escapeHtml($chargement['id']) ?></h1>
+<dl>
+    <dt>Citerne</dt><dd><?= $this->escapeHtml($chargement['citerne_id']) ?></dd>
+    <dt>Dépôt</dt><dd><?= $this->escapeHtml($chargement['depot_id']) ?></dd>
+    <dt>Agent de dépôt</dt><dd><?= $this->escapeHtml($chargement['agent_depot_id']) ?></dd>
+    <dt>Volume déclaré (L)</dt><dd><?= $this->escapeHtml($chargement['volume_declare_litres']) ?></dd>
+    <dt>Destination</dt><dd><?= $this->escapeHtml($chargement['destination_id']) ?></dd>
+    <dt>Date de chargement</dt><dd><?= $this->escapeHtml($chargement['date_chargement']) ?></dd>
+</dl>
+<p><a href="/trace-aes/chargement">&larr; Retour à la liste</a></p>
