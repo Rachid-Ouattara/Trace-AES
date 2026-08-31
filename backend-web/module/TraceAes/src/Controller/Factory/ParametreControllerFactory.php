@@ -1,16 +1,16 @@
 <?php
 
-namespace TraceAes\Service\Factory;
+namespace TraceAes\Controller\Factory;
 
 use Interop\Container\ContainerInterface;
+use TraceAes\Controller\ParametreController;
 use TraceAes\Model\ParametreSystemeTable;
-use TraceAes\Service\MoteurAlertesService;
 use Zend\ServiceManager\Factory\FactoryInterface;
 
-class MoteurAlertesServiceFactory implements FactoryInterface
+class ParametreControllerFactory implements FactoryInterface
 {
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
     {
-        return new MoteurAlertesService($container->get(ParametreSystemeTable::class));
+        return new ParametreController($container->get(ParametreSystemeTable::class));
     }
 }

@@ -38,6 +38,19 @@
                         <li class="nav-item"><a class="nav-link" href="/trace-aes/verification/add">Vérification</a></li>
                         <li class="nav-item"><a class="nav-link" href="/trace-aes/alerte">Alertes</a></li>
                         <li class="nav-item"><a class="nav-link" href="/trace-aes/citerne">Citernes</a></li>
+                        <?php if ($identite && $identite['role'] === 'admin'): ?>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="menuParametres" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Paramètres
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="menuParametres">
+                                <li><a class="dropdown-item" href="/trace-aes/parametre">Seuils d'alerte</a></li>
+                                <li><a class="dropdown-item" href="/trace-aes/agent">Agents</a></li>
+                                <li><a class="dropdown-item" href="/trace-aes/point-controle">Points de contrôle</a></li>
+                                <li><a class="dropdown-item" href="/trace-aes/societe">Sociétés de transport</a></li>
+                            </ul>
+                        </li>
+                        <?php endif; ?>
                     </ul>
                     <?php if ($identite): ?>
                     <span class="navbar-user me-3"><?= $this->escapeHtml($identite['prenom']) ?> <?= $this->escapeHtml($identite['nom']) ?></span>

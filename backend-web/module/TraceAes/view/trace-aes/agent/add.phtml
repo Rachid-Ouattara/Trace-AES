@@ -1,0 +1,70 @@
+<h1><?= $modeEdition ? 'Modifier l\'agent' : 'Nouvel agent' ?></h1>
+
+<?php if ($erreurs): ?>
+<div class="alert alert-danger">
+    <ul class="mb-0">
+        <?php foreach ($erreurs as $erreur): ?>
+        <li><?= $this->escapeHtml($erreur) ?></li>
+        <?php endforeach; ?>
+    </ul>
+</div>
+<?php endif; ?>
+
+<form method="post">
+    <div class="mb-3">
+        <label for="prenom" class="form-label">Prénom</label>
+        <input type="text" name="prenom" id="prenom" class="form-control"
+            value="<?= $this->escapeHtmlAttr($donnees['prenom'] ?? '') ?>" required>
+    </div>
+    <div class="mb-3">
+        <label for="nom" class="form-label">Nom</label>
+        <input type="text" name="nom" id="nom" class="form-control"
+            value="<?= $this->escapeHtmlAttr($donnees['nom'] ?? '') ?>" required>
+    </div>
+    <div class="mb-3">
+        <label for="role" class="form-label">Rôle</label>
+        <select name="role" id="role" class="form-select" required>
+            <?php
+            $roles = ['agent_depot' => 'Agent de dépôt', 'chauffeur' => 'Chauffeur', 'agent_brigade' => 'Agent de brigade', 'admin' => 'Administrateur'];
+            foreach ($roles as $valeur => $libelle):
+            ?>
+            <option value="<?= $valeur ?>" <?= (isset($donnees['role']) && $donnees['role'] === $valeur) ? 'selected' : '' ?>><?= $libelle ?></option>
+            <?php endforeach; ?>
+        </select>
+    </div>
+    <div class="mb-3">
+        <label for="telephone" class="form-label">Téléphone</label>
+        <input type="text" name="telephone" id="telephone" class="form-control"
+            value="<?= $this->escapeHtmlAttr($donnees['telephone'] ?? '') ?>">
+    </div>
+    <div class="mb-3">
+        <label for="societe_transport_id" class="form-label">Société de transport (si chauffeur/agent de dépôt)</label>
+        <select name="societe_transport_id" id="societe_transport_id" class="form-select">
+            <option value="">-- Aucune --</option>
+            <?php foreach ($societes as $societe): ?>
+            <option value="<?= $this->escapeHtmlAttr($societe['id']) ?>"
+                <?= (isset($donnees['societe_transport_id']) && $donnees['societe_transport_id'] == $societe['id']) ? 'selected' : '' ?>>
+                <?= $this->escapeHtml($societe['nom']) ?>
+            </option>
+            <?php endforeach; ?>
+        </select>
+    </div>
+
+    <hr>
+    <p class="text-muted">Compte de connexion (optionnel) — laisser vide si cet agent n'a pas besoin d'accéder au tableau de bord.</p>
+    <div class="mb-3">
+        <label for="nom_utilisateur" class="form-label">Nom d'utilisateur</label>
+        <input type="text" name="nom_utilisateur" id="nom_utilisateur" class="form-control"
+            value="<?= $this->escapeHtmlAttr($donnees['nom_utilisateur'] ?? '') ?>">
+    </div>
+    <div class="mb-3">
+        <label for="mot_de_passe" class="form-label">
+            Mot de passe <?= $modeEdition ? '(laisser vide pour ne pas le changer)' : '' ?>
+        </label>
+        <input type="password" name="mot_de_passe" id="mot_de_passe" class="form-control">
+    </div>
+
+    <button type="submit" class="btn btn-success">Enregistrer</button>
+</form>
+
+<p class="mt-3"><a href="/trace-aes/agent">&larr; Retour à la liste</a></p>

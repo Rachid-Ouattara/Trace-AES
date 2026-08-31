@@ -17,4 +17,12 @@ class DepotTable
     {
         return $this->tableGateway->select();
     }
+
+    public function insert($pointControleId, $nom)
+    {
+        $this->tableGateway->insert([
+            'point_controle_id' => (int) $pointControleId,
+            'nom' => $nom,
+        ]);
+    }
 }

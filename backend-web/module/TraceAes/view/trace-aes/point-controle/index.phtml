@@ -1,0 +1,23 @@
+<?php
+$libelleType = ['depot' => 'Dépôt', 'livraison' => 'Livraison', 'checkpoint' => 'Checkpoint'];
+?>
+<h1>Points de contrôle</h1>
+<p><a href="/trace-aes/point-controle/add" class="btn btn-success btn-sm">+ Nouveau point de contrôle</a></p>
+<table class="table">
+    <thead>
+        <tr><th>Nom</th><th>Type</th><th>Ville</th><th>Pays</th></tr>
+    </thead>
+    <tbody>
+    <?php foreach ($pointsControle as $point): ?>
+        <tr>
+            <td><?= $this->escapeHtml($point['nom']) ?></td>
+            <td><?= $this->escapeHtml($libelleType[$point['type']] ?? $point['type']) ?></td>
+            <td><?= $this->escapeHtml($point['ville']) ?></td>
+            <td><?= $this->escapeHtml($point['pays']) ?></td>
+        </tr>
+    <?php endforeach; ?>
+    <?php if (! count($pointsControle)): ?>
+        <tr><td colspan="4" class="text-muted">Aucun point de contrôle.</td></tr>
+    <?php endif; ?>
+    </tbody>
+</table>

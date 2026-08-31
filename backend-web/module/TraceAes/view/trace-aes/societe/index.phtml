@@ -1,0 +1,18 @@
+<h1>Sociétés de transport</h1>
+<p><a href="/trace-aes/societe/add" class="btn btn-success btn-sm">+ Nouvelle société</a></p>
+<table class="table">
+    <thead>
+        <tr><th>Nom</th><th>Pays</th></tr>
+    </thead>
+    <tbody>
+    <?php foreach ($societes as $societe): ?>
+        <tr>
+            <td><?= $this->escapeHtml($societe['nom']) ?></td>
+            <td><?= $this->escapeHtml($societe['pays']) ?></td>
+        </tr>
+    <?php endforeach; ?>
+    <?php if (! count($societes)): ?>
+        <tr><td colspan="2" class="text-muted">Aucune société.</td></tr>
+    <?php endif; ?>
+    </tbody>
+</table>

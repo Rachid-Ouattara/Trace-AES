@@ -2,16 +2,28 @@
 
 namespace TraceAes\Service;
 
+use TraceAes\Model\ParametreSystemeTable;
+
 /**
  * Moteur de regles (dossier technique, section 3) : compare les donnees
  * declarees (chargement, trajet) aux donnees observees, et produit les
- * alertes correspondantes.
+ * alertes correspondantes. Les seuils sont configurables depuis
+ * /trace-aes/parametre (table parametre_systeme) ; valeurs ci-dessous
+ * utilisees seulement si une cle est absente de la base.
  */
 class MoteurAlertesService
 {
-    const SEUIL_ECART_VOLUME_POURCENT = 5.0;
-    const SEUIL_RETARD_POURCENT = 30.0;
-    const DUREE_MIN_DEVIATION_SECONDES = 600; // 10 minutes, cf. dossier technique
+    const DEFAUT_SEUIL_ECART_VOLUME_POURCENT = 5.0;
+    const DEFAUT_SEUIL_RETARD_POURCENT = 30.0;
+    const DEFAUT_DUREE_MIN_DEVIATION_SECONDES = 600;
+
+    private $parametreSystemeTable;
+    private $parametres;
+
+    public function __construct(ParametreSystemeTable $parametreSystemeTable)
+    {
+        $this->parametreSystemeTable = $parametreSystemeTable;
+    }
 
     /**
      * $trajet et $chargement proviennent de TableGateway::find() (ArrayObject),
@@ -43,7 +55,7 @@ class MoteurAlertesService
      * $positionsRecentes : lignes ['horodatage' => ..., 'distance_metres' => ...],
      * la plus recente en premier (cf. PositionGpsTable::fetchRecentesAvecDistance).
      * Une deviation n'est retenue que si le vehicule est reste hors corridor
-     * de facon continue depuis au moins DUREE_MIN_DEVIATION_SECONDES.
+     * de facon continue depuis au moins la duree minimale configuree.
      */
     public function evaluerDeviationTrajet($toleranceMetres, array $positionsRecentes)
     {
@@ -66,8 +78,9 @@ class MoteurAlertesService
         $plusRecent = strtotime($hodsCorridor[0]['horodatage']);
         $plusAncien = strtotime(end($hodsCorridor)['horodatage']);
         $dureeSecondes = $plusRecent - $plusAncien;
+        $dureeMinSecondes = $this->parametre('duree_min_deviation_minutes', self::DEFAUT_DUREE_MIN_DEVIATION_SECONDES / 60) * 60;
 
-        if ($dureeSecondes < self::DUREE_MIN_DEVIATION_SECONDES) {
+        if ($dureeSecondes < $dureeMinSecondes) {
             return null;
         }
 
@@ -97,8 +110,9 @@ class MoteurAlertesService
             return null;
         }
 
+        $seuil = $this->parametre('seuil_ecart_volume_pourcent', self::DEFAUT_SEUIL_ECART_VOLUME_POURCENT);
         $ecartPourcent = abs($volumeDeclare - $volumeMesure) / $volumeDeclare * 100;
-        if ($ecartPourcent <= self::SEUIL_ECART_VOLUME_POURCENT) {
+        if ($ecartPourcent <= $seuil) {
             return null;
         }
 
@@ -111,7 +125,7 @@ class MoteurAlertesService
                 $ecartPourcent
             ),
             'valeur_mesuree' => round($ecartPourcent, 2),
-            'seuil' => self::SEUIL_ECART_VOLUME_POURCENT,
+            'seuil' => $seuil,
         ];
     }
 
@@ -140,8 +154,9 @@ class MoteurAlertesService
             return null;
         }
 
+        $seuil = $this->parametre('seuil_retard_pourcent', self::DEFAUT_SEUIL_RETARD_POURCENT);
         $depassementPourcent = ($arriveeReelle - $arriveePrevue) / $dureeEstimee * 100;
-        if ($depassementPourcent <= self::SEUIL_RETARD_POURCENT) {
+        if ($depassementPourcent <= $seuil) {
             return null;
         }
 
@@ -152,7 +167,16 @@ class MoteurAlertesService
                 $depassementPourcent
             ),
             'valeur_mesuree' => round($depassementPourcent, 2),
-            'seuil' => self::SEUIL_RETARD_POURCENT,
+            'seuil' => $seuil,
         ];
+    }
+
+    private function parametre($cle, $defaut)
+    {
+        if ($this->parametres === null) {
+            $this->parametres = $this->parametreSystemeTable->fetchToutesLesValeurs();
+        }
+
+        return isset($this->parametres[$cle]) ? (float) $this->parametres[$cle] : $defaut;
     }
 }

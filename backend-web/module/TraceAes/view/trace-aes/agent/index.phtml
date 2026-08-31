@@ -1,0 +1,29 @@
+<?php
+$libelleRole = [
+    'agent_depot' => 'Agent de dépôt',
+    'chauffeur' => 'Chauffeur',
+    'agent_brigade' => 'Agent de brigade',
+    'admin' => 'Administrateur',
+];
+?>
+<h1>Agents</h1>
+<p><a href="/trace-aes/agent/add" class="btn btn-success btn-sm">+ Nouvel agent</a></p>
+<table class="table">
+    <thead>
+        <tr><th>Nom</th><th>Rôle</th><th>Téléphone</th><th>Compte</th><th></th></tr>
+    </thead>
+    <tbody>
+    <?php foreach ($agents as $agent): ?>
+        <tr>
+            <td><?= $this->escapeHtml($agent['prenom'] . ' ' . $agent['nom']) ?></td>
+            <td><?= $this->escapeHtml($libelleRole[$agent['role']] ?? $agent['role']) ?></td>
+            <td><?= $this->escapeHtml($agent['telephone'] ?: '—') ?></td>
+            <td><?= $agent['nom_utilisateur'] ? $this->escapeHtml($agent['nom_utilisateur']) : '<span class="text-muted">aucun</span>' ?></td>
+            <td><a href="/trace-aes/agent/edit/<?= $this->escapeHtmlAttr($agent['id']) ?>">Modifier</a></td>
+        </tr>
+    <?php endforeach; ?>
+    <?php if (! count($agents)): ?>
+        <tr><td colspan="5" class="text-muted">Aucun agent.</td></tr>
+    <?php endif; ?>
+    </tbody>
+</table>

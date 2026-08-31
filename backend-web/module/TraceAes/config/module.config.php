@@ -19,7 +19,7 @@ return [
                 'options' => [
                     'route' => '/trace-aes[/:controller[/:action[/:id]]]',
                     'constraints' => [
-                        'controller' => 'citerne|chargement|trajet|alerte|verification|position|carte|auth',
+                        'controller' => 'citerne|chargement|trajet|alerte|verification|position|carte|auth|parametre|agent|point-controle|societe',
                         'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
                         'id' => '[0-9]+',
                     ],
@@ -42,6 +42,10 @@ return [
             Controller\PositionGpsController::class => Controller\Factory\PositionGpsControllerFactory::class,
             Controller\CarteController::class => Controller\Factory\CarteControllerFactory::class,
             Controller\AuthController::class => Controller\Factory\AuthControllerFactory::class,
+            Controller\ParametreController::class => Controller\Factory\ParametreControllerFactory::class,
+            Controller\AgentController::class => Controller\Factory\AgentControllerFactory::class,
+            Controller\PointControleController::class => Controller\Factory\PointControleControllerFactory::class,
+            Controller\SocieteController::class => Controller\Factory\SocieteControllerFactory::class,
         ],
         'aliases' => [
             'citerne' => Controller\CiterneController::class,
@@ -52,6 +56,10 @@ return [
             'position' => Controller\PositionGpsController::class,
             'carte' => Controller\CarteController::class,
             'auth' => Controller\AuthController::class,
+            'parametre' => Controller\ParametreController::class,
+            'agent' => Controller\AgentController::class,
+            'point-controle' => Controller\PointControleController::class,
+            'societe' => Controller\SocieteController::class,
         ],
     ],
     'service_manager' => [
@@ -75,6 +83,8 @@ return [
             Service\CarteDataService::class => Service\Factory\CarteDataServiceFactory::class,
             \Zend\Authentication\AuthenticationService::class => Service\Factory\AuthenticationServiceFactory::class,
             Service\AuthService::class => Service\Factory\AuthServiceFactory::class,
+            Model\ParametreSystemeTable::class => Model\Factory\ParametreSystemeTableFactory::class,
+            Service\PointControleService::class => Service\Factory\PointControleServiceFactory::class,
         ],
     ],
     'view_helpers' => [

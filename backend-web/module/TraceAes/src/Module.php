@@ -7,6 +7,11 @@ use Zend\Mvc\MvcEvent;
 
 class Module
 {
+    /**
+     * Controleurs (alias d'URL) reserves aux comptes de role 'admin'.
+     */
+    const CONTROLEURS_ADMIN = ['parametre', 'agent', 'point-controle', 'societe'];
+
     public function getConfig()
     {
         return include __DIR__ . '/../config/module.config.php';
@@ -24,9 +29,12 @@ class Module
     }
 
     /**
-     * Garde-fou d'authentification : toutes les pages de TraceAes exigent une
-     * session active, sauf le controleur d'authentification lui-meme (sinon
-     * impossible d'atteindre la page de connexion).
+     * Garde-fou d'authentification et d'autorisation :
+     * - toutes les pages de TraceAes exigent une session active, sauf le
+     *   controleur d'authentification lui-meme (sinon impossible d'atteindre
+     *   la page de connexion) ;
+     * - les ecrans de parametrage (seuils, agents, referentiels) exigent en
+     *   plus le role 'admin'.
      */
     public function onBootstrap(MvcEvent $e)
     {
@@ -49,12 +57,23 @@ class Module
 
             /** @var AuthService $authService */
             $authService = $services->get(AuthService::class);
-            if ($authService->estConnecte()) {
+            $redirection = null;
+
+            if (! $authService->estConnecte()) {
+                $redirection = '/trace-aes/auth/login';
+            } elseif (in_array($controller, self::CONTROLEURS_ADMIN, true)) {
+                $identite = $authService->identite();
+                if ($identite['role'] !== 'admin') {
+                    $redirection = '/trace-aes';
+                }
+            }
+
+            if ($redirection === null) {
                 return null;
             }
 
             $response = $event->getResponse();
-            $response->getHeaders()->addHeaderLine('Location', '/trace-aes/auth/login');
+            $response->getHeaders()->addHeaderLine('Location', $redirection);
             $response->setStatusCode(302);
             $event->stopPropagation(true);
 
