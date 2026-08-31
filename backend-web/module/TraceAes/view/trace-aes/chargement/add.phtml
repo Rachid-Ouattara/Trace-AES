@@ -1,0 +1,68 @@
+<h1>Nouveau chargement</h1>
+
+<?php if ($erreurs): ?>
+<ul class="text-danger">
+    <?php foreach ($erreurs as $erreur): ?>
+    <li><?= $this->escapeHtml($erreur) ?></li>
+    <?php endforeach; ?>
+</ul>
+<?php endif; ?>
+
+<form method="post">
+    <p>
+        <label for="citerne_id">Citerne</label><br>
+        <select name="citerne_id" id="citerne_id" required>
+            <option value="">-- Sélectionner --</option>
+            <?php foreach ($citernes as $citerne): ?>
+            <option value="<?= $this->escapeHtmlAttr($citerne['id']) ?>"
+                <?= (isset($donnees['citerne_id']) && $donnees['citerne_id'] == $citerne['id']) ? 'selected' : '' ?>>
+                <?= $this->escapeHtml($citerne['immatriculation']) ?>
+            </option>
+            <?php endforeach; ?>
+        </select>
+    </p>
+    <p>
+        <label for="depot_id">Dépôt</label><br>
+        <select name="depot_id" id="depot_id" required>
+            <option value="">-- Sélectionner --</option>
+            <?php foreach ($depots as $depot): ?>
+            <option value="<?= $this->escapeHtmlAttr($depot['id']) ?>"
+                <?= (isset($donnees['depot_id']) && $donnees['depot_id'] == $depot['id']) ? 'selected' : '' ?>>
+                <?= $this->escapeHtml($depot['nom']) ?>
+            </option>
+            <?php endforeach; ?>
+        </select>
+    </p>
+    <p>
+        <label for="agent_depot_id">Agent de dépôt</label><br>
+        <select name="agent_depot_id" id="agent_depot_id" required>
+            <option value="">-- Sélectionner --</option>
+            <?php foreach ($agentsDepot as $agent): ?>
+            <option value="<?= $this->escapeHtmlAttr($agent['id']) ?>"
+                <?= (isset($donnees['agent_depot_id']) && $donnees['agent_depot_id'] == $agent['id']) ? 'selected' : '' ?>>
+                <?= $this->escapeHtml($agent['prenom'] . ' ' . $agent['nom']) ?>
+            </option>
+            <?php endforeach; ?>
+        </select>
+    </p>
+    <p>
+        <label for="volume_declare_litres">Volume déclaré (L)</label><br>
+        <input type="number" step="0.01" name="volume_declare_litres" id="volume_declare_litres"
+            value="<?= $this->escapeHtmlAttr($donnees['volume_declare_litres'] ?? '') ?>" required>
+    </p>
+    <p>
+        <label for="destination_id">Destination</label><br>
+        <select name="destination_id" id="destination_id" required>
+            <option value="">-- Sélectionner --</option>
+            <?php foreach ($destinations as $destination): ?>
+            <option value="<?= $this->escapeHtmlAttr($destination['id']) ?>"
+                <?= (isset($donnees['destination_id']) && $donnees['destination_id'] == $destination['id']) ? 'selected' : '' ?>>
+                <?= $this->escapeHtml($destination['nom']) ?> (<?= $this->escapeHtml($destination['ville']) ?>)
+            </option>
+            <?php endforeach; ?>
+        </select>
+    </p>
+    <button type="submit">Enregistrer le chargement</button>
+</form>
+
+<p><a href="/trace-aes/chargement">&larr; Retour à la liste</a></p>

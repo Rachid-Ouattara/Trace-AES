@@ -6,5 +6,8 @@
     <dt>Volume déclaré (L)</dt><dd><?= $this->escapeHtml($chargement['volume_declare_litres']) ?></dd>
     <dt>Destination</dt><dd><?= $this->escapeHtml($chargement['destination_id']) ?></dd>
     <dt>Date de chargement</dt><dd><?= $this->escapeHtml($chargement['date_chargement']) ?></dd>
+    <?php if ($scelle): ?>
+    <dt>Scellé numérique</dt><dd><?= $this->escapeHtml($scelle['code']) ?> (<?= $this->escapeHtml($scelle['type']) ?>, <?= $this->escapeHtml($scelle['etat']) ?>)</dd>
+    <?php endif; ?>
 </dl>
 <p><a href="/trace-aes/chargement">&larr; Retour à la liste</a></p>

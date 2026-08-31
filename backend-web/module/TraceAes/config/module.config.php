@@ -46,6 +46,11 @@ return [
             Model\ChargementTable::class => Model\Factory\ChargementTableFactory::class,
             Model\TrajetTable::class => Model\Factory\TrajetTableFactory::class,
             Model\AlerteTable::class => Model\Factory\AlerteTableFactory::class,
+            Model\DepotTable::class => Model\Factory\DepotTableFactory::class,
+            Model\PointControleTable::class => Model\Factory\PointControleTableFactory::class,
+            Model\AgentTable::class => Model\Factory\AgentTableFactory::class,
+            Model\ScelleNumeriqueTable::class => Model\Factory\ScelleNumeriqueTableFactory::class,
+            Service\ChargementService::class => Service\Factory\ChargementServiceFactory::class,
         ],
     ],
     'view_manager' => [
