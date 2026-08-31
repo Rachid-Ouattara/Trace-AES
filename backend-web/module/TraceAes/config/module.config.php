@@ -13,7 +13,7 @@ return [
                 'options' => [
                     'route' => '/trace-aes[/:controller[/:action[/:id]]]',
                     'constraints' => [
-                        'controller' => 'citerne|chargement|trajet|alerte|verification',
+                        'controller' => 'citerne|chargement|trajet|alerte|verification|position',
                         'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
                         'id' => '[0-9]+',
                     ],
@@ -33,6 +33,7 @@ return [
             Controller\TrajetController::class => Controller\Factory\TrajetControllerFactory::class,
             Controller\AlerteController::class => Controller\Factory\AlerteControllerFactory::class,
             Controller\VerificationController::class => Controller\Factory\VerificationControllerFactory::class,
+            Controller\PositionGpsController::class => Controller\Factory\PositionGpsControllerFactory::class,
         ],
         'aliases' => [
             'citerne' => Controller\CiterneController::class,
@@ -40,6 +41,7 @@ return [
             'trajet' => Controller\TrajetController::class,
             'alerte' => Controller\AlerteController::class,
             'verification' => Controller\VerificationController::class,
+            'position' => Controller\PositionGpsController::class,
         ],
     ],
     'service_manager' => [
@@ -53,9 +55,11 @@ return [
             Model\AgentTable::class => Model\Factory\AgentTableFactory::class,
             Model\ScelleNumeriqueTable::class => Model\Factory\ScelleNumeriqueTableFactory::class,
             Model\VerificationArriveeTable::class => Model\Factory\VerificationArriveeTableFactory::class,
+            Model\PositionGpsTable::class => Model\Factory\PositionGpsTableFactory::class,
             Service\ChargementService::class => Service\Factory\ChargementServiceFactory::class,
             Service\MoteurAlertesService::class => Service\Factory\MoteurAlertesServiceFactory::class,
             Service\VerificationArriveeService::class => Service\Factory\VerificationArriveeServiceFactory::class,
+            Service\PositionGpsService::class => Service\Factory\PositionGpsServiceFactory::class,
         ],
     ],
     'view_manager' => [

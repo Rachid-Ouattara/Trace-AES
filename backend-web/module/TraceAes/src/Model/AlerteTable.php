@@ -33,6 +33,17 @@ class AlerteTable
         return $row;
     }
 
+    public function existeAlerteNonTraitee($trajetId, $typeAlerte)
+    {
+        $row = $this->tableGateway->select([
+            'trajet_id' => (int) $trajetId,
+            'type_alerte' => $typeAlerte,
+            'statut' => 'nouvelle',
+        ])->current();
+
+        return $row !== false && $row !== null;
+    }
+
     public function insert(array $data)
     {
         $this->tableGateway->insert([

@@ -4,18 +4,14 @@ namespace TraceAes\Service;
 
 /**
  * Moteur de regles (dossier technique, section 3) : compare les donnees
- * declarees (chargement, trajet) aux donnees observees a la verification
- * d'arrivee, et produit les alertes correspondantes.
- *
- * Ne couvre ici que les trois familles calculables a la verification
- * d'arrivee (ecart de volume, rupture de scelle, retard anormal). La
- * deviation de trajet necessite un flux de positions GPS pendant le
- * trajet, non encore implemente.
+ * declarees (chargement, trajet) aux donnees observees, et produit les
+ * alertes correspondantes.
  */
 class MoteurAlertesService
 {
     const SEUIL_ECART_VOLUME_POURCENT = 5.0;
     const SEUIL_RETARD_POURCENT = 30.0;
+    const DUREE_MIN_DEVIATION_SECONDES = 600; // 10 minutes, cf. dossier technique
 
     /**
      * $trajet et $chargement proviennent de TableGateway::find() (ArrayObject),
@@ -41,6 +37,55 @@ class MoteurAlertesService
         }
 
         return $alertes;
+    }
+
+    /**
+     * $positionsRecentes : lignes ['horodatage' => ..., 'distance_metres' => ...],
+     * la plus recente en premier (cf. PositionGpsTable::fetchRecentesAvecDistance).
+     * Une deviation n'est retenue que si le vehicule est reste hors corridor
+     * de facon continue depuis au moins DUREE_MIN_DEVIATION_SECONDES.
+     */
+    public function evaluerDeviationTrajet($toleranceMetres, array $positionsRecentes)
+    {
+        if (! $positionsRecentes) {
+            return null;
+        }
+
+        $hodsCorridor = [];
+        foreach ($positionsRecentes as $position) {
+            if ((float) $position['distance_metres'] <= $toleranceMetres) {
+                break;
+            }
+            $hodsCorridor[] = $position;
+        }
+
+        if (! $hodsCorridor) {
+            return null;
+        }
+
+        $plusRecent = strtotime($hodsCorridor[0]['horodatage']);
+        $plusAncien = strtotime(end($hodsCorridor)['horodatage']);
+        $dureeSecondes = $plusRecent - $plusAncien;
+
+        if ($dureeSecondes < self::DUREE_MIN_DEVIATION_SECONDES) {
+            return null;
+        }
+
+        $distanceMax = max(array_map(function ($p) {
+            return (float) $p['distance_metres'];
+        }, $hodsCorridor));
+
+        return [
+            'type_alerte' => 'deviation_trajet',
+            'description' => sprintf(
+                'Position hors corridor declare depuis %d min (distance max constatee : %.0f m, tolerance : %.0f m).',
+                round($dureeSecondes / 60),
+                $distanceMax,
+                $toleranceMetres
+            ),
+            'valeur_mesuree' => round($distanceMax, 1),
+            'seuil' => $toleranceMetres,
+        ];
     }
 
     private function evaluerEcartVolume($chargement, array $verification)
