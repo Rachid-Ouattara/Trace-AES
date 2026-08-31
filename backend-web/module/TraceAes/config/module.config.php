@@ -13,7 +13,7 @@ return [
                 'options' => [
                     'route' => '/trace-aes[/:controller[/:action[/:id]]]',
                     'constraints' => [
-                        'controller' => 'citerne|chargement|trajet|alerte|verification|position',
+                        'controller' => 'citerne|chargement|trajet|alerte|verification|position|carte',
                         'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
                         'id' => '[0-9]+',
                     ],
@@ -34,6 +34,7 @@ return [
             Controller\AlerteController::class => Controller\Factory\AlerteControllerFactory::class,
             Controller\VerificationController::class => Controller\Factory\VerificationControllerFactory::class,
             Controller\PositionGpsController::class => Controller\Factory\PositionGpsControllerFactory::class,
+            Controller\CarteController::class => Controller\Factory\CarteControllerFactory::class,
         ],
         'aliases' => [
             'citerne' => Controller\CiterneController::class,
@@ -42,6 +43,7 @@ return [
             'alerte' => Controller\AlerteController::class,
             'verification' => Controller\VerificationController::class,
             'position' => Controller\PositionGpsController::class,
+            'carte' => Controller\CarteController::class,
         ],
     ],
     'service_manager' => [
@@ -60,6 +62,7 @@ return [
             Service\MoteurAlertesService::class => Service\Factory\MoteurAlertesServiceFactory::class,
             Service\VerificationArriveeService::class => Service\Factory\VerificationArriveeServiceFactory::class,
             Service\PositionGpsService::class => Service\Factory\PositionGpsServiceFactory::class,
+            Service\CarteDataService::class => Service\Factory\CarteDataServiceFactory::class,
         ],
     ],
     'view_manager' => [

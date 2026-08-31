@@ -1,0 +1,87 @@
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+<style>
+    #carte-trace-aes { height: 600px; width: 100%; }
+    .legende-carte { margin: 10px 0; font-size: 0.9em; }
+    .legende-carte span { display: inline-block; margin-right: 16px; }
+    .legende-carte .pastille { display: inline-block; width: 10px; height: 10px; border-radius: 50%; margin-right: 4px; }
+</style>
+
+<h1>Tableau de bord cartographique</h1>
+
+<div class="legende-carte">
+    <span><i class="pastille" style="background:#2b6cb0"></i>Dépôt</span>
+    <span><i class="pastille" style="background:#2f855a"></i>Livraison</span>
+    <span><i class="pastille" style="background:#b7791f"></i>Checkpoint</span>
+    <span><i class="pastille" style="background:#1a202c"></i>Position trajet en cours</span>
+    <span><i class="pastille" style="background:#c53030"></i>Alerte non traitée</span>
+</div>
+
+<div id="carte-trace-aes"></div>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script>
+(function () {
+    var donnees = <?= json_encode($donnees) ?>;
+
+    var couleurParType = {
+        depot: '#2b6cb0',
+        livraison: '#2f855a',
+        checkpoint: '#b7791f'
+    };
+
+    var carte = L.map('carte-trace-aes').setView([12.3, -1.5], 6);
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+        maxZoom: 18
+    }).addTo(carte);
+
+    donnees.pointsControle.forEach(function (point) {
+        L.circleMarker([point.latitude, point.longitude], {
+            radius: 7,
+            color: couleurParType[point.type] || '#666',
+            fillColor: couleurParType[point.type] || '#666',
+            fillOpacity: 0.9
+        })
+            .addTo(carte)
+            .bindPopup('<strong>' + point.nom + '</strong><br>' + point.type + (point.ville ? ' — ' + point.ville : ''));
+    });
+
+    donnees.trajets.forEach(function (trajet) {
+        if (trajet.itineraire.length > 1) {
+            L.polyline(trajet.itineraire, { color: '#4a5568', weight: 3, dashArray: '6 4' })
+                .addTo(carte)
+                .bindPopup('Trajet #' + trajet.id + ' (chargement #' + trajet.chargement_id + ') — itinéraire déclaré');
+        }
+
+        if (trajet.derniere_position) {
+            L.circleMarker([trajet.derniere_position.latitude, trajet.derniere_position.longitude], {
+                radius: 6,
+                color: '#1a202c',
+                fillColor: '#1a202c',
+                fillOpacity: 1
+            })
+                .addTo(carte)
+                .bindPopup(
+                    'Trajet #' + trajet.id + '<br>Dernière position : ' + trajet.derniere_position.horodatage
+                );
+        }
+    });
+
+    donnees.alertes.forEach(function (alerte) {
+        L.circleMarker([alerte.latitude, alerte.longitude], {
+            radius: 10,
+            color: '#c53030',
+            fillColor: '#c53030',
+            fillOpacity: 0.5,
+            weight: 2
+        })
+            .addTo(carte)
+            .bindPopup(
+                '<strong>' + alerte.type_alerte + '</strong><br>' +
+                alerte.description + '<br>' +
+                '<a href="/trace-aes/alerte/view/' + alerte.id + '">Voir l\'alerte</a>'
+            );
+    });
+})();
+</script>

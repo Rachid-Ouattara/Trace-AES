@@ -13,6 +13,12 @@ class VerificationArriveeTable
         $this->tableGateway = $tableGateway;
     }
 
+    public function findByTrajet($trajetId)
+    {
+        $row = $this->tableGateway->select(['trajet_id' => (int) $trajetId])->current();
+        return $row ?: null;
+    }
+
     public function insert(array $data)
     {
         $this->tableGateway->insert([
