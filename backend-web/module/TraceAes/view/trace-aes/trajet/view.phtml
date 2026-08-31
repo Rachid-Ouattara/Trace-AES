@@ -7,4 +7,7 @@
     <dt>Arrivée prévue</dt><dd><?= $this->escapeHtml($trajet['heure_arrivee_prevue']) ?></dd>
     <dt>Statut</dt><dd><?= $this->escapeHtml($trajet['statut']) ?></dd>
 </dl>
+<?php if ($trajet['statut'] === 'en_cours'): ?>
+<p><a href="/trace-aes/verification/add">Enregistrer la vérification à l'arrivée</a></p>
+<?php endif; ?>
 <p><a href="/trace-aes/trajet">&larr; Retour à la liste</a></p>

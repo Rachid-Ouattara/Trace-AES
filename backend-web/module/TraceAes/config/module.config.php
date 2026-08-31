@@ -13,7 +13,7 @@ return [
                 'options' => [
                     'route' => '/trace-aes[/:controller[/:action[/:id]]]',
                     'constraints' => [
-                        'controller' => 'citerne|chargement|trajet|alerte',
+                        'controller' => 'citerne|chargement|trajet|alerte|verification',
                         'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
                         'id' => '[0-9]+',
                     ],
@@ -32,12 +32,14 @@ return [
             Controller\ChargementController::class => Controller\Factory\ChargementControllerFactory::class,
             Controller\TrajetController::class => Controller\Factory\TrajetControllerFactory::class,
             Controller\AlerteController::class => Controller\Factory\AlerteControllerFactory::class,
+            Controller\VerificationController::class => Controller\Factory\VerificationControllerFactory::class,
         ],
         'aliases' => [
             'citerne' => Controller\CiterneController::class,
             'chargement' => Controller\ChargementController::class,
             'trajet' => Controller\TrajetController::class,
             'alerte' => Controller\AlerteController::class,
+            'verification' => Controller\VerificationController::class,
         ],
     ],
     'service_manager' => [
@@ -50,7 +52,10 @@ return [
             Model\PointControleTable::class => Model\Factory\PointControleTableFactory::class,
             Model\AgentTable::class => Model\Factory\AgentTableFactory::class,
             Model\ScelleNumeriqueTable::class => Model\Factory\ScelleNumeriqueTableFactory::class,
+            Model\VerificationArriveeTable::class => Model\Factory\VerificationArriveeTableFactory::class,
             Service\ChargementService::class => Service\Factory\ChargementServiceFactory::class,
+            Service\MoteurAlertesService::class => Service\Factory\MoteurAlertesServiceFactory::class,
+            Service\VerificationArriveeService::class => Service\Factory\VerificationArriveeServiceFactory::class,
         ],
     ],
     'view_manager' => [

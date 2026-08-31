@@ -33,6 +33,17 @@ class AlerteTable
         return $row;
     }
 
+    public function insert(array $data)
+    {
+        $this->tableGateway->insert([
+            'trajet_id' => (int) $data['trajet_id'],
+            'type_alerte' => $data['type_alerte'],
+            'description' => $data['description'],
+            'valeur_mesuree' => $data['valeur_mesuree'],
+            'seuil' => $data['seuil'],
+        ]);
+    }
+
     public function marquerTraitee($id, $statut, $agentTraitementId = null)
     {
         if (! in_array($statut, ['traitee', 'fausse_alerte'], true)) {
