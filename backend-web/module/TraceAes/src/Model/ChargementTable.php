@@ -3,6 +3,7 @@
 namespace TraceAes\Model;
 
 use RuntimeException;
+use Zend\Db\Sql\Select;
 use Zend\Db\TableGateway\TableGatewayInterface;
 
 class ChargementTable
@@ -26,6 +27,14 @@ class ChargementTable
             throw new RuntimeException(sprintf('Chargement id %d introuvable', (int) $id));
         }
         return $row;
+    }
+
+    public function fetchSansTrajet()
+    {
+        return $this->tableGateway->select(function (Select $select) {
+            $select->join('trajet', 'trajet.chargement_id = chargement.id', [], Select::JOIN_LEFT)
+                ->where(['trajet.id' => null]);
+        });
     }
 
     public function insert(array $data)
