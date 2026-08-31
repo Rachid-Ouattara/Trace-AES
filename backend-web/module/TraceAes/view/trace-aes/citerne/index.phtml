@@ -11,5 +11,8 @@
             <td><?= $this->escapeHtml($citerne['capacite_litres']) ?></td>
         </tr>
     <?php endforeach; ?>
+    <?php if (! count($citernes)): ?>
+        <tr><td colspan="3" class="text-muted">Aucune citerne.</td></tr>
+    <?php endif; ?>
     </tbody>
 </table>

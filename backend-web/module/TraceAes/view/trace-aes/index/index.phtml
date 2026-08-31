@@ -1,9 +1,32 @@
 <h1>TRACE-AES — Tableau de bord de contrôle</h1>
-<ul>
-    <li><a href="/trace-aes/carte">Carte de suivi</a></li>
-    <li><a href="/trace-aes/chargement">Chargements</a></li>
-    <li><a href="/trace-aes/trajet">Trajets</a></li>
-    <li><a href="/trace-aes/verification/add">Vérification à l'arrivée</a></li>
-    <li><a href="/trace-aes/alerte">Alertes</a></li>
-    <li><a href="/trace-aes/citerne">Citernes</a></li>
-</ul>
+<p>Chaîne de garde numérique pour le transport et la distribution des hydrocarbures dans l'espace AES.</p>
+
+<div class="row">
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-body">
+                <h2 class="card-title"><?= $this->escapeHtml($trajetsEnCours) ?></h2>
+                <p class="card-text">Trajet(s) en cours</p>
+                <a href="/trace-aes/trajet" class="btn btn-success btn-sm">Voir les trajets</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-body">
+                <h2 class="card-title"><?= $this->escapeHtml($alertesNouvelles) ?></h2>
+                <p class="card-text">Alerte(s) non traitée(s)</p>
+                <a href="/trace-aes/alerte?statut=nouvelle" class="btn btn-success btn-sm">Voir les alertes</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-body">
+                <h2 class="card-title">Carte</h2>
+                <p class="card-text">Suivi cartographique en temps réel</p>
+                <a href="/trace-aes/carte" class="btn btn-success btn-sm">Ouvrir la carte</a>
+            </div>
+        </div>
+    </div>
+</div>

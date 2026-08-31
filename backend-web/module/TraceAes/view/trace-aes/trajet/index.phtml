@@ -1,5 +1,12 @@
+<?php
+$badgeParStatut = [
+    'en_cours' => 'badge-primary',
+    'termine' => 'badge-success',
+    'interrompu' => 'badge-danger',
+];
+?>
 <h1>Trajets</h1>
-<p><a href="/trace-aes/trajet/add">+ Nouveau trajet</a></p>
+<p><a href="/trace-aes/trajet/add" class="btn btn-success btn-sm">+ Nouveau trajet</a></p>
 <table class="table">
     <thead>
         <tr><th>ID</th><th>Chargement</th><th>Statut</th><th>Arrivée prévue</th></tr>
@@ -9,9 +16,12 @@
         <tr>
             <td><?= $this->escapeHtml($trajet['id']) ?></td>
             <td><a href="/trace-aes/trajet/view/<?= $this->escapeHtmlAttr($trajet['id']) ?>"><?= $this->escapeHtml($trajet['chargement_id']) ?></a></td>
-            <td><?= $this->escapeHtml($trajet['statut']) ?></td>
+            <td><span class="badge <?= $badgeParStatut[$trajet['statut']] ?? 'badge-secondary' ?>"><?= $this->escapeHtml($trajet['statut']) ?></span></td>
             <td><?= $this->escapeHtml($trajet['heure_arrivee_prevue']) ?></td>
         </tr>
     <?php endforeach; ?>
+    <?php if (! count($trajets)): ?>
+        <tr><td colspan="4" class="text-muted">Aucun trajet.</td></tr>
+    <?php endif; ?>
     </tbody>
 </table>

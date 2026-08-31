@@ -1,5 +1,5 @@
 <h1>Chargements</h1>
-<p><a href="/trace-aes/chargement/add">+ Nouveau chargement</a></p>
+<p><a href="/trace-aes/chargement/add" class="btn btn-success btn-sm">+ Nouveau chargement</a></p>
 <table class="table">
     <thead>
         <tr><th>ID</th><th>Citerne</th><th>Volume déclaré (L)</th><th>Date</th></tr>
@@ -13,5 +13,8 @@
             <td><?= $this->escapeHtml($chargement['date_chargement']) ?></td>
         </tr>
     <?php endforeach; ?>
+    <?php if (! count($chargements)): ?>
+        <tr><td colspan="4" class="text-muted">Aucun chargement.</td></tr>
+    <?php endif; ?>
     </tbody>
 </table>

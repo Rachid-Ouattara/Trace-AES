@@ -3,7 +3,7 @@
 <html lang="en">
     <head>
         <meta charset="utf-8">
-        <?= $this->headTitle('ZF Skeleton Application')->setSeparator(' - ')->setAutoEscape(false) ?>
+        <?= $this->headTitle('TRACE-AES')->setSeparator(' — ')->setAutoEscape(false) ?>
 
         <?= $this->headMeta()
             ->appendName('viewport', 'width=device-width, initial-scale=1.0')
@@ -29,15 +29,16 @@
                     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon"></span>
                     </button>
-                    <a class="navbar-brand" href="<?= $this->url('home') ?>">
-                        <img src="<?= $this->basePath('img/zf-logo-mark.svg') ?>" height="28" alt="Zend Framework <?= \Application\Module::VERSION ?>"/>&nbsp;Skeleton Application
-                    </a>
+                    <a class="navbar-brand" href="/trace-aes">TRACE-AES</a>
                 </div>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav mr-auto">
-                        <li class="nav-item active">
-                            <a class="nav-link" href="<?= $this->url('home') ?>">Home <span class="sr-only">(current)</span></a>
-                        </li>
+                        <li class="nav-item"><a class="nav-link" href="/trace-aes/carte">Carte</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/trace-aes/chargement">Chargements</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/trace-aes/trajet">Trajets</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/trace-aes/verification/add">Vérification</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/trace-aes/alerte">Alertes</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/trace-aes/citerne">Citernes</a></li>
                     </ul>
                 </div>
             </div>
@@ -46,7 +47,7 @@
             <?= $this->content ?>
             <hr>
             <footer>
-                <p>&copy; 2005 - <?= date('Y') ?> by Zend Technologies Ltd. All rights reserved.</p>
+                <p>TRACE-AES — Traçabilité et Régulation Anti-fraude des Carburants dans l'Espace AES. Concours Innovations Énergie et Hydrocarbures, SEMH-AES / SAMAO <?= date('Y') ?>.</p>
             </footer>
         </div>
         <?= $this->inlineScript() ?>

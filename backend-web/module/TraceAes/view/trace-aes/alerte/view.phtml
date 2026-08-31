@@ -1,11 +1,18 @@
+<?php
+$badgeParStatut = [
+    'nouvelle' => 'badge-danger',
+    'traitee' => 'badge-success',
+    'fausse_alerte' => 'badge-secondary',
+];
+?>
 <h1>Alerte #<?= $this->escapeHtml($alerte['id']) ?></h1>
 <dl>
     <dt>Type</dt><dd><?= $this->escapeHtml($alerte['type_alerte']) ?></dd>
-    <dt>Trajet</dt><dd><?= $this->escapeHtml($alerte['trajet_id']) ?></dd>
+    <dt>Trajet</dt><dd><a href="/trace-aes/trajet/view/<?= $this->escapeHtmlAttr($alerte['trajet_id']) ?>">#<?= $this->escapeHtml($alerte['trajet_id']) ?></a></dd>
     <dt>Description</dt><dd><?= $this->escapeHtml($alerte['description']) ?></dd>
     <dt>Valeur mesurée</dt><dd><?= $this->escapeHtml($alerte['valeur_mesuree']) ?></dd>
     <dt>Seuil</dt><dd><?= $this->escapeHtml($alerte['seuil']) ?></dd>
-    <dt>Statut</dt><dd><?= $this->escapeHtml($alerte['statut']) ?></dd>
+    <dt>Statut</dt><dd><span class="badge <?= $badgeParStatut[$alerte['statut']] ?? 'badge-secondary' ?>"><?= $this->escapeHtml($alerte['statut']) ?></span></dd>
     <dt>Date de détection</dt><dd><?= $this->escapeHtml($alerte['date_detection']) ?></dd>
     <?php if ($alerte['date_traitement']): ?>
     <dt>Date de traitement</dt><dd><?= $this->escapeHtml($alerte['date_traitement']) ?></dd>
@@ -13,14 +20,14 @@
 </dl>
 
 <?php if ($alerte['statut'] === 'nouvelle'): ?>
-<form method="post" action="/trace-aes/alerte/traiter/<?= $this->escapeHtmlAttr($alerte['id']) ?>" style="display:inline">
+<form method="post" action="/trace-aes/alerte/traiter/<?= $this->escapeHtmlAttr($alerte['id']) ?>" class="d-inline">
     <input type="hidden" name="statut" value="traitee">
-    <button type="submit">Marquer traitée</button>
+    <button type="submit" class="btn btn-success">Marquer traitée</button>
 </form>
-<form method="post" action="/trace-aes/alerte/traiter/<?= $this->escapeHtmlAttr($alerte['id']) ?>" style="display:inline">
+<form method="post" action="/trace-aes/alerte/traiter/<?= $this->escapeHtmlAttr($alerte['id']) ?>" class="d-inline">
     <input type="hidden" name="statut" value="fausse_alerte">
-    <button type="submit">Marquer fausse alerte</button>
+    <button type="submit" class="btn btn-secondary">Marquer fausse alerte</button>
 </form>
 <?php endif; ?>
 
-<p><a href="/trace-aes/alerte">&larr; Retour à la liste</a></p>
+<p class="mt-3"><a href="/trace-aes/alerte">&larr; Retour à la liste</a></p>

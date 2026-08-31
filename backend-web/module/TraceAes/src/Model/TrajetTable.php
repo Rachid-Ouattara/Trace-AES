@@ -30,6 +30,11 @@ class TrajetTable
         return $row;
     }
 
+    public function compterEnCours()
+    {
+        return count($this->tableGateway->select(['statut' => 'en_cours']));
+    }
+
     public function fetchSansVerification()
     {
         return $this->tableGateway->select(function (Select $select) {

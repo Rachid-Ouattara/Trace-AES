@@ -1,6 +1,14 @@
+<?php
+$badgeParStatut = [
+    'nouvelle' => 'badge-danger',
+    'traitee' => 'badge-success',
+    'fausse_alerte' => 'badge-secondary',
+];
+?>
 <h1>Alertes<?= $statut ? ' — statut : ' . $this->escapeHtml($statut) : '' ?></h1>
-<form method="get">
-    <select name="statut" onchange="this.form.submit()">
+<form method="get" class="form-inline mb-3">
+    <label for="statut" class="mr-2">Filtrer par statut</label>
+    <select name="statut" id="statut" class="form-control" onchange="this.form.submit()">
         <option value="">Toutes</option>
         <option value="nouvelle" <?= $statut === 'nouvelle' ? 'selected' : '' ?>>Nouvelle</option>
         <option value="traitee" <?= $statut === 'traitee' ? 'selected' : '' ?>>Traitée</option>
@@ -17,9 +25,12 @@
             <td><?= $this->escapeHtml($alerte['id']) ?></td>
             <td><a href="/trace-aes/alerte/view/<?= $this->escapeHtmlAttr($alerte['id']) ?>"><?= $this->escapeHtml($alerte['type_alerte']) ?></a></td>
             <td><?= $this->escapeHtml($alerte['trajet_id']) ?></td>
-            <td><?= $this->escapeHtml($alerte['statut']) ?></td>
+            <td><span class="badge <?= $badgeParStatut[$alerte['statut']] ?? 'badge-secondary' ?>"><?= $this->escapeHtml($alerte['statut']) ?></span></td>
             <td><?= $this->escapeHtml($alerte['date_detection']) ?></td>
         </tr>
     <?php endforeach; ?>
+    <?php if (! count($alertes)): ?>
+        <tr><td colspan="5" class="text-muted">Aucune alerte.</td></tr>
+    <?php endif; ?>
     </tbody>
 </table>

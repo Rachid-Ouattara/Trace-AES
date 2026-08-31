@@ -1,17 +1,19 @@
 <h1>Nouveau trajet</h1>
 
 <?php if ($erreurs): ?>
-<ul class="text-danger">
-    <?php foreach ($erreurs as $erreur): ?>
-    <li><?= $this->escapeHtml($erreur) ?></li>
-    <?php endforeach; ?>
-</ul>
+<div class="alert alert-danger">
+    <ul class="mb-0">
+        <?php foreach ($erreurs as $erreur): ?>
+        <li><?= $this->escapeHtml($erreur) ?></li>
+        <?php endforeach; ?>
+    </ul>
+</div>
 <?php endif; ?>
 
 <form method="post">
-    <p>
-        <label for="chargement_id">Chargement</label><br>
-        <select name="chargement_id" id="chargement_id" required>
+    <div class="form-group">
+        <label for="chargement_id">Chargement</label>
+        <select name="chargement_id" id="chargement_id" class="form-control" required>
             <option value="">-- Sélectionner --</option>
             <?php foreach ($chargements as $chargement): ?>
             <option value="<?= $this->escapeHtmlAttr($chargement['id']) ?>"
@@ -21,12 +23,12 @@
             <?php endforeach; ?>
         </select>
         <?php if (! count($chargements)): ?>
-        <br><small>Aucun chargement sans trajet disponible. <a href="/trace-aes/chargement/add">Créer un chargement</a>.</small>
+        <small class="form-text text-muted">Aucun chargement sans trajet disponible. <a href="/trace-aes/chargement/add">Créer un chargement</a>.</small>
         <?php endif; ?>
-    </p>
-    <p>
-        <label for="chauffeur_agent_id">Chauffeur</label><br>
-        <select name="chauffeur_agent_id" id="chauffeur_agent_id" required>
+    </div>
+    <div class="form-group">
+        <label for="chauffeur_agent_id">Chauffeur</label>
+        <select name="chauffeur_agent_id" id="chauffeur_agent_id" class="form-control" required>
             <option value="">-- Sélectionner --</option>
             <?php foreach ($chauffeurs as $chauffeur): ?>
             <option value="<?= $this->escapeHtmlAttr($chauffeur['id']) ?>"
@@ -35,25 +37,25 @@
             </option>
             <?php endforeach; ?>
         </select>
-    </p>
-    <p>
-        <label for="itineraire_wkt">Itinéraire déclaré (WKT LINESTRING)</label><br>
-        <textarea name="itineraire_wkt" id="itineraire_wkt" rows="3" cols="60"
+    </div>
+    <div class="form-group">
+        <label for="itineraire_wkt">Itinéraire déclaré (WKT LINESTRING)</label>
+        <textarea name="itineraire_wkt" id="itineraire_wkt" rows="3" class="form-control"
             placeholder="LINESTRING(-1.53 12.37, -1.60 12.40, -1.70 12.50)"
-            required><?= $this->escapeHtml($donnees['itineraire_wkt'] ?? '') ?></textarea><br>
-        <small>Coordonnées longitude/latitude, séparées par des virgules.</small>
-    </p>
-    <p>
-        <label for="heure_depart_prevue">Départ prévu</label><br>
+            required><?= $this->escapeHtml($donnees['itineraire_wkt'] ?? '') ?></textarea>
+        <small class="form-text text-muted">Coordonnées longitude/latitude, séparées par des virgules.</small>
+    </div>
+    <div class="form-group">
+        <label for="heure_depart_prevue">Départ prévu</label>
         <input type="datetime-local" name="heure_depart_prevue" id="heure_depart_prevue"
-            value="<?= $this->escapeHtmlAttr($donnees['heure_depart_prevue'] ?? '') ?>" required>
-    </p>
-    <p>
-        <label for="heure_arrivee_prevue">Arrivée prévue</label><br>
+            class="form-control" value="<?= $this->escapeHtmlAttr($donnees['heure_depart_prevue'] ?? '') ?>" required>
+    </div>
+    <div class="form-group">
+        <label for="heure_arrivee_prevue">Arrivée prévue</label>
         <input type="datetime-local" name="heure_arrivee_prevue" id="heure_arrivee_prevue"
-            value="<?= $this->escapeHtmlAttr($donnees['heure_arrivee_prevue'] ?? '') ?>" required>
-    </p>
-    <button type="submit">Enregistrer le trajet</button>
+            class="form-control" value="<?= $this->escapeHtmlAttr($donnees['heure_arrivee_prevue'] ?? '') ?>" required>
+    </div>
+    <button type="submit" class="btn btn-success">Enregistrer le trajet</button>
 </form>
 
-<p><a href="/trace-aes/trajet">&larr; Retour à la liste</a></p>
+<p class="mt-3"><a href="/trace-aes/trajet">&larr; Retour à la liste</a></p>

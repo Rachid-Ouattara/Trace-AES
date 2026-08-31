@@ -3,7 +3,6 @@
 namespace TraceAes;
 
 use Zend\Router\Http\Segment;
-use Zend\ServiceManager\Factory\InvokableFactory;
 
 return [
     'router' => [
@@ -27,7 +26,7 @@ return [
     ],
     'controllers' => [
         'factories' => [
-            Controller\IndexController::class => InvokableFactory::class,
+            Controller\IndexController::class => Controller\Factory\IndexControllerFactory::class,
             Controller\CiterneController::class => Controller\Factory\CiterneControllerFactory::class,
             Controller\ChargementController::class => Controller\Factory\ChargementControllerFactory::class,
             Controller\TrajetController::class => Controller\Factory\TrajetControllerFactory::class,
