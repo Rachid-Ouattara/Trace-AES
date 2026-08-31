@@ -1,6 +1,6 @@
 <?= $this->doctype() ?>
 
-<html lang="en">
+<html lang="fr">
     <head>
         <meta charset="utf-8">
         <?= $this->headTitle('TRACE-AES')->setSeparator(' — ')->setAutoEscape(false) ?>
@@ -10,29 +10,28 @@
             ->appendHttpEquiv('X-UA-Compatible', 'IE=edge')
         ?>
 
-        <!-- Le styles -->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
         <?= $this->headLink(['rel' => 'shortcut icon', 'type' => 'image/vnd.microsoft.icon', 'href' => $this->basePath() . '/img/favicon.ico'])
-            ->prependStylesheet($this->basePath('css/style.css'))
+            ->prependStylesheet($this->basePath('css/trace-aes.css'))
             ->prependStylesheet($this->basePath('css/bootstrap.min.css'))
         ?>
 
-        <!-- Scripts -->
-        <?= $this->inlineScript()
-            ->prependFile($this->basePath('js/bootstrap.min.js'))
-            ->prependFile($this->basePath('js/jquery-3.3.1.min.js'))
-        ?>
+        <?= $this->inlineScript()->prependFile($this->basePath('js/bootstrap.min.js')) ?>
     </head>
     <body>
-        <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark" role="navigation">
+        <?php $identite = $this->identiteConnectee(); ?>
+        <nav class="navbar navbar-expand-md navbar-dark fixed-top taes-navbar" role="navigation">
             <div class="container">
-                <div class="navbar-header">
-                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
-                    <a class="navbar-brand" href="/trace-aes">TRACE-AES</a>
-                </div>
+                <a class="navbar-brand" href="/trace-aes">
+                    <span class="taes-brand-mark">AES</span> TRACE-AES
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav mr-auto">
+                    <ul class="navbar-nav me-auto">
                         <li class="nav-item"><a class="nav-link" href="/trace-aes/carte">Carte</a></li>
                         <li class="nav-item"><a class="nav-link" href="/trace-aes/chargement">Chargements</a></li>
                         <li class="nav-item"><a class="nav-link" href="/trace-aes/trajet">Trajets</a></li>
@@ -40,6 +39,10 @@
                         <li class="nav-item"><a class="nav-link" href="/trace-aes/alerte">Alertes</a></li>
                         <li class="nav-item"><a class="nav-link" href="/trace-aes/citerne">Citernes</a></li>
                     </ul>
+                    <?php if ($identite): ?>
+                    <span class="navbar-user me-3"><?= $this->escapeHtml($identite['prenom']) ?> <?= $this->escapeHtml($identite['nom']) ?></span>
+                    <a href="/trace-aes/auth/logout" class="btn btn-sm btn-outline-light">Déconnexion</a>
+                    <?php endif; ?>
                 </div>
             </div>
         </nav>

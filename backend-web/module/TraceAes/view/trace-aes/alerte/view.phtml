@@ -1,8 +1,8 @@
 <?php
 $badgeParStatut = [
-    'nouvelle' => 'badge-danger',
-    'traitee' => 'badge-success',
-    'fausse_alerte' => 'badge-secondary',
+    'nouvelle' => 'bg-danger',
+    'traitee' => 'bg-success',
+    'fausse_alerte' => 'bg-secondary',
 ];
 ?>
 <h1>Alerte #<?= $this->escapeHtml($alerte['id']) ?></h1>
@@ -12,7 +12,7 @@ $badgeParStatut = [
     <dt>Description</dt><dd><?= $this->escapeHtml($alerte['description']) ?></dd>
     <dt>Valeur mesurée</dt><dd><?= $this->escapeHtml($alerte['valeur_mesuree']) ?></dd>
     <dt>Seuil</dt><dd><?= $this->escapeHtml($alerte['seuil']) ?></dd>
-    <dt>Statut</dt><dd><span class="badge <?= $badgeParStatut[$alerte['statut']] ?? 'badge-secondary' ?>"><?= $this->escapeHtml($alerte['statut']) ?></span></dd>
+    <dt>Statut</dt><dd><span class="badge <?= $badgeParStatut[$alerte['statut']] ?? 'bg-secondary' ?>"><?= $this->escapeHtml($alerte['statut']) ?></span></dd>
     <dt>Date de détection</dt><dd><?= $this->escapeHtml($alerte['date_detection']) ?></dd>
     <?php if ($alerte['date_traitement']): ?>
     <dt>Date de traitement</dt><dd><?= $this->escapeHtml($alerte['date_traitement']) ?></dd>

@@ -1,8 +1,8 @@
 <?php
 $badgeParStatut = [
-    'en_cours' => 'badge-primary',
-    'termine' => 'badge-success',
-    'interrompu' => 'badge-danger',
+    'en_cours' => 'bg-primary',
+    'termine' => 'bg-success',
+    'interrompu' => 'bg-danger',
 ];
 ?>
 <h1>Trajets</h1>
@@ -16,7 +16,7 @@ $badgeParStatut = [
         <tr>
             <td><?= $this->escapeHtml($trajet['id']) ?></td>
             <td><a href="/trace-aes/trajet/view/<?= $this->escapeHtmlAttr($trajet['id']) ?>"><?= $this->escapeHtml($trajet['chargement_id']) ?></a></td>
-            <td><span class="badge <?= $badgeParStatut[$trajet['statut']] ?? 'badge-secondary' ?>"><?= $this->escapeHtml($trajet['statut']) ?></span></td>
+            <td><span class="badge <?= $badgeParStatut[$trajet['statut']] ?? 'bg-secondary' ?>"><?= $this->escapeHtml($trajet['statut']) ?></span></td>
             <td><?= $this->escapeHtml($trajet['heure_arrivee_prevue']) ?></td>
         </tr>
     <?php endforeach; ?>

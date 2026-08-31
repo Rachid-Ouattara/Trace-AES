@@ -23,9 +23,9 @@
 <?php endif; ?>
 
 <form method="post">
-    <div class="form-group">
-        <label for="trajet_id">Trajet</label>
-        <select name="trajet_id" id="trajet_id" class="form-control" required>
+    <div class="mb-3">
+        <label for="trajet_id" class="form-label">Trajet</label>
+        <select name="trajet_id" id="trajet_id" class="form-select" required>
             <option value="">-- Sélectionner --</option>
             <?php foreach ($trajets as $trajet): ?>
             <option value="<?= $this->escapeHtmlAttr($trajet['id']) ?>"
@@ -38,9 +38,9 @@
         <small class="form-text text-muted">Aucun trajet en cours à vérifier. <a href="/trace-aes/trajet/add">Créer un trajet</a>.</small>
         <?php endif; ?>
     </div>
-    <div class="form-group">
-        <label for="point_controle_id">Point de contrôle</label>
-        <select name="point_controle_id" id="point_controle_id" class="form-control" required>
+    <div class="mb-3">
+        <label for="point_controle_id" class="form-label">Point de contrôle</label>
+        <select name="point_controle_id" id="point_controle_id" class="form-select" required>
             <option value="">-- Sélectionner --</option>
             <?php foreach ($pointsControle as $point): ?>
             <option value="<?= $this->escapeHtmlAttr($point['id']) ?>"
@@ -50,9 +50,9 @@
             <?php endforeach; ?>
         </select>
     </div>
-    <div class="form-group">
-        <label for="agent_id">Agent de brigade</label>
-        <select name="agent_id" id="agent_id" class="form-control" required>
+    <div class="mb-3">
+        <label for="agent_id" class="form-label">Agent de brigade</label>
+        <select name="agent_id" id="agent_id" class="form-select" required>
             <option value="">-- Sélectionner --</option>
             <?php foreach ($agentsBrigade as $agent): ?>
             <option value="<?= $this->escapeHtmlAttr($agent['id']) ?>"
@@ -62,14 +62,14 @@
             <?php endforeach; ?>
         </select>
     </div>
-    <div class="form-group">
-        <label for="volume_mesure_litres">Volume mesuré (L)</label>
+    <div class="mb-3">
+        <label for="volume_mesure_litres" class="form-label">Volume mesuré (L)</label>
         <input type="number" step="0.01" name="volume_mesure_litres" id="volume_mesure_litres"
             class="form-control" value="<?= $this->escapeHtmlAttr($donnees['volume_mesure_litres'] ?? '') ?>" required>
     </div>
-    <div class="form-group">
-        <label for="etat_scelle_constate">État du scellé constaté</label>
-        <select name="etat_scelle_constate" id="etat_scelle_constate" class="form-control" required>
+    <div class="mb-3">
+        <label for="etat_scelle_constate" class="form-label">État du scellé constaté</label>
+        <select name="etat_scelle_constate" id="etat_scelle_constate" class="form-select" required>
             <option value="intact" <?= (isset($donnees['etat_scelle_constate']) && $donnees['etat_scelle_constate'] === 'intact') ? 'selected' : '' ?>>Intact</option>
             <option value="rompu" <?= (isset($donnees['etat_scelle_constate']) && $donnees['etat_scelle_constate'] === 'rompu') ? 'selected' : '' ?>>Rompu</option>
         </select>

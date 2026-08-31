@@ -14,6 +14,7 @@ return [
     'Zend\Router',
     'Zend\Validator',
     'Zend\Db',
+    'Zend\Session',
     'Application',
     'TraceAes',
 ];

@@ -15,7 +15,9 @@
         "zendframework/zend-skeleton-installer": "^0.1.7 || ^1.0",
         "zendframework/zend-mvc": "^3.1.1",
         "zendframework/zend-db": "^2.10.0",
-        "zfcampus/zf-development-mode": "^3.2"
+        "zfcampus/zf-development-mode": "^3.2",
+        "zendframework/zend-session": "^2.9",
+        "zendframework/zend-authentication": "^2.7"
     },
     "autoload": {
         "psr-4": {

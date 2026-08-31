@@ -11,9 +11,9 @@
 <?php endif; ?>
 
 <form method="post">
-    <div class="form-group">
-        <label for="citerne_id">Citerne</label>
-        <select name="citerne_id" id="citerne_id" class="form-control" required>
+    <div class="mb-3">
+        <label for="citerne_id" class="form-label">Citerne</label>
+        <select name="citerne_id" id="citerne_id" class="form-select" required>
             <option value="">-- Sélectionner --</option>
             <?php foreach ($citernes as $citerne): ?>
             <option value="<?= $this->escapeHtmlAttr($citerne['id']) ?>"
@@ -23,9 +23,9 @@
             <?php endforeach; ?>
         </select>
     </div>
-    <div class="form-group">
-        <label for="depot_id">Dépôt</label>
-        <select name="depot_id" id="depot_id" class="form-control" required>
+    <div class="mb-3">
+        <label for="depot_id" class="form-label">Dépôt</label>
+        <select name="depot_id" id="depot_id" class="form-select" required>
             <option value="">-- Sélectionner --</option>
             <?php foreach ($depots as $depot): ?>
             <option value="<?= $this->escapeHtmlAttr($depot['id']) ?>"
@@ -35,9 +35,9 @@
             <?php endforeach; ?>
         </select>
     </div>
-    <div class="form-group">
-        <label for="agent_depot_id">Agent de dépôt</label>
-        <select name="agent_depot_id" id="agent_depot_id" class="form-control" required>
+    <div class="mb-3">
+        <label for="agent_depot_id" class="form-label">Agent de dépôt</label>
+        <select name="agent_depot_id" id="agent_depot_id" class="form-select" required>
             <option value="">-- Sélectionner --</option>
             <?php foreach ($agentsDepot as $agent): ?>
             <option value="<?= $this->escapeHtmlAttr($agent['id']) ?>"
@@ -47,14 +47,14 @@
             <?php endforeach; ?>
         </select>
     </div>
-    <div class="form-group">
-        <label for="volume_declare_litres">Volume déclaré (L)</label>
+    <div class="mb-3">
+        <label for="volume_declare_litres" class="form-label">Volume déclaré (L)</label>
         <input type="number" step="0.01" name="volume_declare_litres" id="volume_declare_litres"
             class="form-control" value="<?= $this->escapeHtmlAttr($donnees['volume_declare_litres'] ?? '') ?>" required>
     </div>
-    <div class="form-group">
-        <label for="destination_id">Destination</label>
-        <select name="destination_id" id="destination_id" class="form-control" required>
+    <div class="mb-3">
+        <label for="destination_id" class="form-label">Destination</label>
+        <select name="destination_id" id="destination_id" class="form-select" required>
             <option value="">-- Sélectionner --</option>
             <?php foreach ($destinations as $destination): ?>
             <option value="<?= $this->escapeHtmlAttr($destination['id']) ?>"

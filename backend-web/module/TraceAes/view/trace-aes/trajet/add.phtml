@@ -11,9 +11,9 @@
 <?php endif; ?>
 
 <form method="post">
-    <div class="form-group">
-        <label for="chargement_id">Chargement</label>
-        <select name="chargement_id" id="chargement_id" class="form-control" required>
+    <div class="mb-3">
+        <label for="chargement_id" class="form-label">Chargement</label>
+        <select name="chargement_id" id="chargement_id" class="form-select" required>
             <option value="">-- Sélectionner --</option>
             <?php foreach ($chargements as $chargement): ?>
             <option value="<?= $this->escapeHtmlAttr($chargement['id']) ?>"
@@ -26,9 +26,9 @@
         <small class="form-text text-muted">Aucun chargement sans trajet disponible. <a href="/trace-aes/chargement/add">Créer un chargement</a>.</small>
         <?php endif; ?>
     </div>
-    <div class="form-group">
-        <label for="chauffeur_agent_id">Chauffeur</label>
-        <select name="chauffeur_agent_id" id="chauffeur_agent_id" class="form-control" required>
+    <div class="mb-3">
+        <label for="chauffeur_agent_id" class="form-label">Chauffeur</label>
+        <select name="chauffeur_agent_id" id="chauffeur_agent_id" class="form-select" required>
             <option value="">-- Sélectionner --</option>
             <?php foreach ($chauffeurs as $chauffeur): ?>
             <option value="<?= $this->escapeHtmlAttr($chauffeur['id']) ?>"
@@ -38,20 +38,20 @@
             <?php endforeach; ?>
         </select>
     </div>
-    <div class="form-group">
-        <label for="itineraire_wkt">Itinéraire déclaré (WKT LINESTRING)</label>
+    <div class="mb-3">
+        <label for="itineraire_wkt" class="form-label">Itinéraire déclaré (WKT LINESTRING)</label>
         <textarea name="itineraire_wkt" id="itineraire_wkt" rows="3" class="form-control"
             placeholder="LINESTRING(-1.53 12.37, -1.60 12.40, -1.70 12.50)"
             required><?= $this->escapeHtml($donnees['itineraire_wkt'] ?? '') ?></textarea>
         <small class="form-text text-muted">Coordonnées longitude/latitude, séparées par des virgules.</small>
     </div>
-    <div class="form-group">
-        <label for="heure_depart_prevue">Départ prévu</label>
+    <div class="mb-3">
+        <label for="heure_depart_prevue" class="form-label">Départ prévu</label>
         <input type="datetime-local" name="heure_depart_prevue" id="heure_depart_prevue"
             class="form-control" value="<?= $this->escapeHtmlAttr($donnees['heure_depart_prevue'] ?? '') ?>" required>
     </div>
-    <div class="form-group">
-        <label for="heure_arrivee_prevue">Arrivée prévue</label>
+    <div class="mb-3">
+        <label for="heure_arrivee_prevue" class="form-label">Arrivée prévue</label>
         <input type="datetime-local" name="heure_arrivee_prevue" id="heure_arrivee_prevue"
             class="form-control" value="<?= $this->escapeHtmlAttr($donnees['heure_arrivee_prevue'] ?? '') ?>" required>
     </div>

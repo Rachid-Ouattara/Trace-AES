@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="utf-8">
+    <title>Connexion — TRACE-AES</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" type="image/vnd.microsoft.icon" href="/img/favicon.ico">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/trace-aes.css">
+</head>
+<body style="padding-top:0;">
+    <div class="taes-login-wrapper">
+        <div class="card taes-login-card">
+            <div class="card-body">
+                <div class="taes-login-brand">
+                    <span class="taes-brand-mark">AES</span>
+                    <h1>TRACE-AES</h1>
+                    <p>Chaîne de garde numérique des hydrocarbures</p>
+                </div>
+
+                <?php if ($erreur): ?>
+                <div class="alert alert-danger"><?= $this->escapeHtml($erreur) ?></div>
+                <?php endif; ?>
+
+                <form method="post">
+                    <div class="mb-3">
+                        <label for="nom_utilisateur" class="form-label">Nom d'utilisateur</label>
+                        <input type="text" name="nom_utilisateur" id="nom_utilisateur" class="form-control" required autofocus>
+                    </div>
+                    <div class="mb-3">
+                        <label for="mot_de_passe" class="form-label">Mot de passe</label>
+                        <input type="password" name="mot_de_passe" id="mot_de_passe" class="form-control" required>
+                    </div>
+                    <button type="submit" class="btn btn-success w-100">Se connecter</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

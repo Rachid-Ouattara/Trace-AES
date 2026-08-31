@@ -17,4 +17,10 @@ class AgentTable
     {
         return $this->tableGateway->select(['role' => $role]);
     }
+
+    public function findByUsername($nomUtilisateur)
+    {
+        $row = $this->tableGateway->select(['nom_utilisateur' => $nomUtilisateur])->current();
+        return $row ?: null;
+    }
 }

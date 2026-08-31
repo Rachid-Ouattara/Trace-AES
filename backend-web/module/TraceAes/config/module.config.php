@@ -5,6 +5,13 @@ namespace TraceAes;
 use Zend\Router\Http\Segment;
 
 return [
+    'session_config' => [
+        'name' => 'traceaes_session',
+        'cookie_httponly' => true,
+    ],
+    'session_storage' => [
+        'type' => \Zend\Session\Storage\SessionArrayStorage::class,
+    ],
     'router' => [
         'routes' => [
             'trace-aes' => [
@@ -12,7 +19,7 @@ return [
                 'options' => [
                     'route' => '/trace-aes[/:controller[/:action[/:id]]]',
                     'constraints' => [
-                        'controller' => 'citerne|chargement|trajet|alerte|verification|position|carte',
+                        'controller' => 'citerne|chargement|trajet|alerte|verification|position|carte|auth',
                         'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
                         'id' => '[0-9]+',
                     ],
@@ -34,6 +41,7 @@ return [
             Controller\VerificationController::class => Controller\Factory\VerificationControllerFactory::class,
             Controller\PositionGpsController::class => Controller\Factory\PositionGpsControllerFactory::class,
             Controller\CarteController::class => Controller\Factory\CarteControllerFactory::class,
+            Controller\AuthController::class => Controller\Factory\AuthControllerFactory::class,
         ],
         'aliases' => [
             'citerne' => Controller\CiterneController::class,
@@ -43,6 +51,7 @@ return [
             'verification' => Controller\VerificationController::class,
             'position' => Controller\PositionGpsController::class,
             'carte' => Controller\CarteController::class,
+            'auth' => Controller\AuthController::class,
         ],
     ],
     'service_manager' => [
@@ -64,6 +73,16 @@ return [
             Service\VerificationArriveeService::class => Service\Factory\VerificationArriveeServiceFactory::class,
             Service\PositionGpsService::class => Service\Factory\PositionGpsServiceFactory::class,
             Service\CarteDataService::class => Service\Factory\CarteDataServiceFactory::class,
+            \Zend\Authentication\AuthenticationService::class => Service\Factory\AuthenticationServiceFactory::class,
+            Service\AuthService::class => Service\Factory\AuthServiceFactory::class,
+        ],
+    ],
+    'view_helpers' => [
+        'factories' => [
+            View\Helper\IdentiteConnectee::class => View\Helper\Factory\IdentiteConnecteeFactory::class,
+        ],
+        'aliases' => [
+            'identiteConnectee' => View\Helper\IdentiteConnectee::class,
         ],
     ],
     'view_manager' => [
