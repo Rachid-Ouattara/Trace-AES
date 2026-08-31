@@ -1,0 +1,38 @@
+<h1>Nouvelle citerne</h1>
+
+<?php if ($erreurs): ?>
+<div class="alert alert-danger">
+    <ul class="mb-0">
+        <?php foreach ($erreurs as $erreur): ?>
+        <li><?= $this->escapeHtml($erreur) ?></li>
+        <?php endforeach; ?>
+    </ul>
+</div>
+<?php endif; ?>
+
+<form method="post">
+    <div class="form-group">
+        <label for="immatriculation">Immatriculation</label>
+        <input type="text" name="immatriculation" id="immatriculation" class="form-control"
+            value="<?= $this->escapeHtmlAttr($donnees['immatriculation'] ?? '') ?>" required>
+    </div>
+    <div class="form-group">
+        <label for="capacite_litres">Capacité (L)</label>
+        <input type="number" step="0.01" name="capacite_litres" id="capacite_litres" class="form-control"
+            value="<?= $this->escapeHtmlAttr($donnees['capacite_litres'] ?? '') ?>" required>
+    </div>
+    <div class="form-group">
+        <label for="societe_nom">Société de transport</label>
+        <input type="text" name="societe_nom" id="societe_nom" class="form-control"
+            value="<?= $this->escapeHtmlAttr($donnees['societe_nom'] ?? '') ?>" required>
+        <small class="form-text text-muted">Si le nom existe déjà, la société existante est réutilisée.</small>
+    </div>
+    <div class="form-group">
+        <label for="societe_pays">Pays de la société</label>
+        <input type="text" name="societe_pays" id="societe_pays" class="form-control"
+            value="<?= $this->escapeHtmlAttr($donnees['societe_pays'] ?? '') ?>" required>
+    </div>
+    <button type="submit" class="btn btn-success">Enregistrer la citerne</button>
+</form>
+
+<p class="mt-3"><a href="/trace-aes/citerne">&larr; Retour à la liste</a></p>

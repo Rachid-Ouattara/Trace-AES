@@ -27,4 +27,17 @@ class CiterneTable
         }
         return $row;
     }
+
+    public function insert(array $data)
+    {
+        $this->tableGateway->insert([
+            'immatriculation' => $data['immatriculation'],
+            'capacite_litres' => $data['capacite_litres'],
+            'societe_transport_id' => (int) $data['societe_transport_id'],
+        ]);
+
+        $adapter = $this->tableGateway->adapter;
+        $result = $adapter->query('SELECT lastval() AS id', $adapter::QUERY_MODE_EXECUTE);
+        return (int) $result->current()['id'];
+    }
 }
